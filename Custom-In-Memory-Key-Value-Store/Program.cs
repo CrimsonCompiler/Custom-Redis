@@ -42,8 +42,12 @@ namespace Custom_In_Memory_Key_Value_Store
                     string key = parts[1];
                     string value = parts[2];
 
-                    // storing the value
+                    // storing the value in RAM
                     store[key] = value;
+
+                    // storing the value in Log
+                    AppendToLog(input);
+
                     Console.WriteLine("OK");
                 }
 
@@ -67,6 +71,8 @@ namespace Custom_In_Memory_Key_Value_Store
 
                     if (store.Remove(key))
                     {
+                        // Storing the delete info too
+                        AppendToLog(input);
                         Console.WriteLine("(integer) 1");
                     }
                     else
