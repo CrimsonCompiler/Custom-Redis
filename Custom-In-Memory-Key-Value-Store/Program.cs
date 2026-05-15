@@ -15,6 +15,9 @@ namespace Custom_In_Memory_Key_Value_Store
             Console.WriteLine("==== Mini Redis Server Started ====");
             Console.WriteLine("Commands: SET [key] [value] | GET [key] | DEL [key] | EXIT");
 
+            // Loading Existing data from hard-disk drive
+            LoadDataFromDisk();
+
             // REPL
             while (true)
             {
@@ -94,6 +97,42 @@ namespace Custom_In_Memory_Key_Value_Store
             {
                 sw.WriteLine(command);
             }
+        }
+
+
+        static void LoadDataFromDisk()
+        {
+            if (!File.Exists(AofFilePath)) return; // If the log isn't created yet
+
+            Console.WriteLine("Loading data from disk...");
+
+            string[] logLines = File.ReadAllLines(AofFilePath);
+
+            int recoveredCount = 0;
+
+            foreach(string line in logLines)
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                string[] parts = line.Split(' ', 3);
+                string command = parts[0].ToUpper();
+
+                if(command == "SET" && parts.Length >= 3)
+                {
+                    store[parts[1]] = parts[2];
+                    recoveredCount++;
+                }
+
+                else if(command == "DEL" && parts.Length >= 2)
+                {
+                    store.Remove(parts[1]);
+                    recoveredCount++;
+                }
+            }
+            Console.WriteLine($"Recovered {recoveredCount} operations from AOF log.\n");
         }
     }
 }
