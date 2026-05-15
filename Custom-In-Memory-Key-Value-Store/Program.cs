@@ -43,6 +43,34 @@ namespace Custom_In_Memory_Key_Value_Store
                     store[key] = value;
                     Console.WriteLine("OK");
                 }
+
+                else if(command == "GET" && parts.Length >= 2)
+                {
+                    string key = parts[1];
+
+                    if (store.ContainsKey(key))
+                    {
+                        Console.WriteLine($"\"{store[key]}\"");
+                    }
+                    else
+                    {
+                        Console.WriteLine("nil");
+                    }
+                }
+
+                else if(command == "DEL" && parts.Length >= 2)
+                {
+                    string key = parts[1];
+
+                    if (store.Remove(key))
+                    {
+                        Console.WriteLine("(integer) 1");
+                    }
+                    else
+                    {
+                        Console.WriteLine("(integer) 0");
+                    }
+                }
             }
         }
     }
