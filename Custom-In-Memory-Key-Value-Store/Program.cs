@@ -21,6 +21,12 @@ namespace Custom_In_Memory_Key_Value_Store
                 string[] parts = input.Split(' ', 3);
                 string command = parts[0].ToUpper();
 
+                // ignore the fake input (inc. null, whitespace)
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    continue;
+                }
+
 
                 if(command == "EXIT")
                 {
@@ -28,7 +34,7 @@ namespace Custom_In_Memory_Key_Value_Store
                     break;
                 }
 
-                else if(command == "SET" && parts.Length > 3)
+                else if(command == "SET" && parts.Length >= 3)
                 {
                     string key = parts[1];
                     string value = parts[2];
