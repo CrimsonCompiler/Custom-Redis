@@ -7,6 +7,8 @@ namespace Custom_In_Memory_Key_Value_Store
     internal class Program
     {
         static Dictionary<string, string> store = new Dictionary<string, string>();
+        // Log File
+        const string AofFilePath = "custom_redis_storage.aof";
 
         static void Main(string[] args)
         {
@@ -77,6 +79,14 @@ namespace Custom_In_Memory_Key_Value_Store
                 {
                     Console.WriteLine("(error) ERR unknown command or wrong number of arguments");
                 }
+            }
+        }
+
+        static void AppendToLog(string command)
+        {
+            using (StreamWriter sw = new StreamWriter(AofFilePath, true))
+            {
+                sw.WriteLine(command);
             }
         }
     }
