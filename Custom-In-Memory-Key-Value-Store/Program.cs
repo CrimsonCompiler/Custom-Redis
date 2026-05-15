@@ -17,6 +17,26 @@ namespace Custom_In_Memory_Key_Value_Store
             {
                 Console.Write("127.0.0.1:6379> ");
                 string input = Console.ReadLine();
+
+                string[] parts = input.Split(' ', 3);
+                string command = parts[0].ToUpper();
+
+
+                if(command == "EXIT")
+                {
+                    Console.WriteLine("Shutting down server....");
+                    break;
+                }
+
+                else if(command == "SET" && parts.Length > 3)
+                {
+                    string key = parts[1];
+                    string value = parts[2];
+
+                    // storing the value
+                    store[key] = value;
+                    Console.WriteLine("OK");
+                }
             }
         }
     }
