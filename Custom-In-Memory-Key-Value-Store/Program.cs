@@ -71,6 +71,11 @@ namespace Custom_In_Memory_Key_Value_Store
                         Console.WriteLine("(integer) 0");
                     }
                 }
+
+                else
+                {
+                    Console.WriteLine("(error) ERR unknown command or wrong number of arguments");
+                }
             }
         }
     }
