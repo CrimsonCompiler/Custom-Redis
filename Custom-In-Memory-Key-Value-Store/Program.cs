@@ -9,7 +9,9 @@ namespace Custom_In_Memory_Key_Value_Store
 
         static void Main(string[] args)
         {
-                
+            Console.WriteLine("==== Mini Redis Server Started ====");
+            Console.WriteLine("Commands: SET [key] [value] | GET [key] | DEL [key] | EXIT");
+            
         }
     }
 }
